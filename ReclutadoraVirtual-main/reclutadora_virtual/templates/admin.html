@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Panel de Administración</h1>
+    <h2>Lista de Candidatos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Habilidades</th>
+                <th>Experiencia (años)</th>
+                <th>CV</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidato in candidatos %}
+                <tr>
+                    <td>{{ candidato['nombre'] }}</td>
+                    <td>{{ candidato['habilidades'] }}</td>
+                    <td>{{ candidato['experiencia'] }}</td>
+                    <td><a href="{{ url_for('uploaded_file', filename=candidato['cv']) }}">Descargar CV</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if mejor_candidato %}
+        <h2>Mejor Candidato</h2>
+        <p>Nombre: {{ mejor_candidato['nombre'] }}</p>
+        <p>Habilidades: {{ mejor_candidato['habilidades'] }}</p>
+        <p>Experiencia: {{ mejor_candidato['experiencia'] }} años</p>
+        <p><a href="{{ url_for('uploaded_file', filename=mejor_candidato['cv']) }}">Descargar CV</a></p>
+    {% endif %}
+    <a href="{{ url_for('index') }}">Volver</a>
+</body>
+</html>
